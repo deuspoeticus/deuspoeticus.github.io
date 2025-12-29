@@ -2,7 +2,7 @@
 
 const dim = Math.min(innerHeight, innerWidth);
 
-let angleInc = 1 * Math.floor(randomBetween(2, 6));
+let angleInc;
 
 let ellipseW, ellipseH;
 
@@ -16,22 +16,30 @@ let imgLeft, imgRight;
 
 let leftPart, rightPart;
 
-let fill1 = 10;
-let fill2 = "#F5F5DC"
-let bg = "#F5F5DC";
+let fill1;
+let fill2;
+let bg;
+//let bg = "#F5F5DC";
 //let bg = "#E32227";
 
 function setup() {
-
   createCanvas(dim, dim);
 	
-	//pixelDensity(3);
+  //pixelDensity(3);
+  frameRate(60);
+  
+  colorMode(HSB, 360, 100, 100);
+  
+  fill1 = "#0A0A0A";
+  fill2 = "#F5F5DC"
+  
+  bg = color(Math.floor(randomBetween(0, 360)), 80, 80);
 	
-	frameRate(60);
-	
-	ellipseW = width * randomBetween(0.2, 0.35);
-	ellipseH = height * randomBetween(0.2, 0.35);
-
+  ellipseW = width * randomBetween(0.2, 0.35);
+  ellipseH = height * randomBetween(0.2, 0.35);
+  
+  angleInc = 1 * Math.floor(randomBetween(2, 6));
+  
   leftPart = createGraphics(width / 2, height);
   rightPart = createGraphics(width / 2, height);
 
@@ -54,10 +62,10 @@ function draw() {
   leftPart.background(bg);
   rightPart.background(bg);
 	
-	const i = frameCount;
+  const i = frameCount;
 
-	let t0 = sin(i * 0.025) ** 3 ;
-	t0 = map(t0, -1, 1, 0, 1);
+  let t0 = sin(i * 0.025) ** 3 ;
+  t0 = map(t0, -1, 1, 0, 1);
 	
   canDraw = true;
   angle = angleStart;
