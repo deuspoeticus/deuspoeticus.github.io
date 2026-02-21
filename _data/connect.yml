@@ -1,0 +1,26 @@
+- title: "socials"
+  items:
+    - label: mail
+      link: mailto:deuspoeticus@proton.me
+    - label: x
+      link: "https://x.com/deuspoeticus"
+    - label: instagram
+      link: "https://instagram.com/deuspoeticus"
+
+- title: "code"
+  items:
+    - label: github
+      link: "https://github.com/deuspoeticus"
+    - label: openprocessing
+      link: "https://openprocessing.org/user/313258#sketches"
+    - label: shadertoy
+      link: "https://www.shadertoy.com/user/deuspoeticus"
+
+- title: "credits"
+  items:
+    - label: "display: <a href='https://www.fontshare.com/fonts/trench-slab'>Trench Slab</a> by ITF"
+      link: null
+    - label: "body: <a href='https://vercel.com/font?type=pixel'>Geist Pixel Square</a> by Vercel"
+      link: null
+    - label: "DEVSPOETICVS; ENFANTDUSIECLE; 2026."
+      link: null

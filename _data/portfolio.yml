@@ -1,0 +1,71 @@
+- id: "01"
+  projectName: "aberration"
+  type: "Generative NFT"
+  stack: ["GLSL"]
+  year: "2026"
+  link: "https://www.editart.xyz/series/KT1WxHGMkk1CWarfJJARu6rNWwpMudZAMRdy"
+  screenshot: "../assets/images/09.png"
+
+- id: "02"
+  projectName: "self-aware."
+  type: "AI artwork"
+  stack: ["TD", "SD", "Suno", "ElevenLabs"]
+  year: "2025"
+  link: "https://x.com/deuspoeticus/status/1902367286104670282/video/1"
+  screenshot: "../assets/images/08.png"
+
+- id: "03"
+  projectName: "gradient breaker"
+  type: "Minigame"
+  stack: ["Vanilla JS"]
+  year: "2025"
+  link: "https://deuspoeticus.github.io/gradient-breaker/"
+  screenshot: "../assets/images/07.png"
+
+- id: "04"
+  projectName: "interdimensional crossection"
+  type: "Shader"
+  stack: ["GLSL"]
+  year: "2025"
+  link: "https://www.shadertoy.com/view/M3yyWd"
+  screenshot: "../assets/images/06.png"
+
+- id: "05"
+  projectName: "4d temple"
+  type: "Shader"
+  stack: ["GLSL"]
+  year: "2025"
+  link: "https://www.shadertoy.com/view/l3cfzf"
+  screenshot: "../assets/images/05.png"
+
+- id: "06"
+  projectName: "aetherWorks"
+  type: "Web3 dApp"
+  stack: ["ts", "react.js", "python", "wasm"]
+  year: "2024"
+  link: "https://aetherworks.xyz"
+  screenshot: "../assets/images/04.png"
+
+- id: "07"
+  projectName: "FX(VERSE)"
+  type: "Generative NFT"
+  stack: ["vanilla js"]
+  year: "2023"
+  link: "https://www.fxhash.xyz/project/fx(verse)"
+  screenshot: "../assets/images/03.svg"
+
+- id: "08"
+  projectName: "fx(flowField)"
+  type: "Generative NFT"
+  stack: ["p5.js"]
+  year: "2023"
+  link: "https://www.fxhash.xyz/project/fx(flowfield)"
+  screenshot: "../assets/images/02.png"
+
+- id: "09"
+  projectName: "Postmodern Sacrifices"
+  type: "Generative NFT"
+  stack: ["p5.js"]
+  year: "2022"
+  link: "https://www.fxhash.xyz/project/postmodern-sacrifices"
+  screenshot: "../assets/images/01.png"

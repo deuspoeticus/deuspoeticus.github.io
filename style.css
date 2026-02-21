@@ -1,0 +1,1276 @@
+/* ==========================================================================
+   1. VARIABLES & TOKENS
+   ========================================================================== */
+@font-face {
+    font-family: 'TrenchSlab';
+    src: url('./fonts/TrenchSlab-Bold.woff2') format('woff2'),
+        url('./fonts/TrenchSlab-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Geist Pixel';
+    src: url('./fonts/GeistPixel-Square.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: fallback;
+}
+
+:root {
+    /* Font Families */
+    --font-heading: 'TrenchSlab', 'Arial Narrow', serif;
+    --font-mono: 'Geist Pixel', monospace;
+
+    /* Colors */
+    --color-bg: #ffffff;
+    --color-text: #000000;
+    --color-accent: #000000;
+    --border-glass: #000000;
+
+    /* Glass Tokens */
+    --glass-bg: rgba(0, 0, 0, 0.08);
+    --glass-blur: 1rem;
+
+    /* Typography Scale (MOBILE BASE) */
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.5rem;
+    --text-hero: 4rem;
+    /* Smaller for mobile */
+
+    /* Spacing Scale */
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+
+    /* Letter Spacing */
+    --tracking-normal: 0em;
+    --tracking-wide: 0.1em;
+    /* Tighter for mobile */
+
+    /* Z-Index Layers */
+    --z-canvas: -1;
+    --z-content: auto;
+    --z-controls: 1000;
+    --z-overlay: 10000;
+    --z-nav: 10001;
+
+    /* Shadows */
+    --text-shadow: 1px 1px 0 rgba(255, 255, 255, 1.0);
+}
+
+html.dark-mode {
+    --color-bg: #000000;
+    --color-text: #ffffff;
+    --color-accent: #ffffff;
+    --border-glass: #ffffff;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --text-shadow: 1px 1px 0 rgba(0, 0, 0, 1.0);
+}
+
+/* DESKTOP OVERRIDES */
+@media (min-width: 768px) {
+    :root {
+        --text-sm: 1rem;
+        --text-base: 1.25rem;
+        --text-lg: 3.5rem;
+        --text-hero: 15rem;
+        --spacing-md: 3rem;
+        --spacing-lg: 4rem;
+        --tracking-wide: 0.25em;
+    }
+}
+
+/* ==========================================================================
+   2. BASE & RESET
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Global Scrollbar Hide */
+::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    scroll-behavior: smooth;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    text-shadow: var(--text-shadow);
+    font-family: var(--font-mono);
+    font-weight: 400;
+    letter-spacing: var(--tracking-wide);
+    line-height: 1.6;
+    min-height: 100%;
+    width: 100%;
+
+    /* Mobile: Allow vertical scroll by default */
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-kerning: normal;
+    position: relative;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Canvas Background */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-canvas);
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   3. TYPOGRAPHY
+   ========================================================================== */
+h1 {
+    font-family: var(--font-heading);
+    color: #ffffff;
+    mix-blend-mode: difference;
+    text-shadow: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
+    --header-cap-offset: -0.2em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-normal);
+    font-size: var(--text-hero);
+    line-height: 0.8;
+    margin-top: var(--header-cap-offset);
+    margin-bottom: var(--spacing-sm);
+
+    /* Mobile: Word Wrap */
+    word-break: break-word;
+    hyphens: auto;
+}
+
+/* Specific override for Home H1 (too long) */
+#home h1 {
+    font-size: 3rem;
+    /* Smaller than default 5rem on mobile */
+}
+
+@media (min-width: 768px) {
+    #home h1 {
+        font-size: calc(var(--text-hero) * 0.75);
+        /* Smaller than default 15rem on desktop */
+    }
+}
+
+h2 {
+    font-family: var(--font-mono);
+    font-size: var(--text-lg);
+    font-weight: 400;
+    text-transform: lowercase;
+    color: var(--color-text);
+    margin-top: var(--spacing-sm);
+    letter-spacing: var(--tracking-wide);
+}
+
+h2::before {
+    content: "{";
+    margin-right: 0.5rem;
+}
+
+p,
+a {
+    color: var(--color-text);
+}
+
+/* ==========================================================================
+   4. LAYOUT SYSTEM (MOBILE FIRST)
+   ========================================================================== */
+main {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    z-index: var(--z-content);
+
+    /* Default: Vertical Stack with Snap */
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    /* Full viewport height */
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    padding-bottom: 0;
+}
+
+section {
+    width: 100%;
+    /* Mobile: Full height snap */
+    height: 100dvh;
+    min-height: 100dvh;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Center content vertically */
+    padding: var(--spacing-md) var(--spacing-sm);
+    padding-top: 5rem;
+    /* Space for TOP nav */
+    padding-bottom: var(--spacing-md);
+
+    position: relative;
+    background-color: transparent;
+    overflow-y: auto;
+}
+
+/* Section Header & Content Grid */
+.section-header {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+}
+
+.section-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    letter-spacing: var(--tracking-normal);
+    font-size: var(--text-base);
+}
+
+.section-content+.section-header {
+    margin-top: var(--spacing-lg);
+}
+
+/* ==========================================================================
+   5. DESKTOP LAYOUT (Horizontal) (>768px)
+   ========================================================================== */
+@media (min-width: 768px) {
+
+    /* Reset Body to Hidden Scroll for custom horizontal handling */
+    html,
+    body {
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+    }
+
+    /* Hide Settings Toggle on Desktop */
+    #toggle-panel {
+        display: none !important;
+    }
+
+    /* Force Panel Styles */
+    #pane-container,
+    .custom-panel,
+    .panel-label,
+    .panel-value,
+    .panel-row {
+        font-size: var(--text-sm) !important;
+        letter-spacing: var(--tracking-normal) !important;
+    }
+
+    input,
+    button,
+    select,
+    textarea {
+        font-family: inherit;
+        font-size: inherit;
+        letter-spacing: inherit;
+    }
+
+    main {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        padding-bottom: 0;
+
+        /* Horizontal Scroll Container */
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        scroll-snap-type: x mandatory;
+        padding-right: 0;
+    }
+
+    section {
+        min-width: 100vw;
+        width: 100vw;
+        height: 100%;
+        min-height: 0;
+        flex-shrink: 0;
+        scroll-snap-align: start;
+        overflow-y: auto;
+        padding: 5rem var(--spacing-md) var(--spacing-md) var(--spacing-md);
+        justify-content: flex-start;
+        padding-bottom: var(--spacing-md);
+    }
+
+    #portfolio {
+        overflow-y: hidden;
+    }
+
+    .section-content {
+        width: 25%;
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ==========================================================================
+   6. COMPONENTS
+   ========================================================================== */
+
+/* --- Navigation (Mobile Base: Inverted) --- */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-text);
+    /* INVERTED BG */
+    color: var(--color-bg);
+    /* INVERTED TEXT */
+    border-bottom: 1px solid var(--color-text);
+    z-index: var(--z-nav);
+}
+
+nav a {
+    padding: 0.5rem;
+    line-height: 1;
+    text-align: center;
+    text-indent: 0;
+    color: var(--color-bg);
+    /* INVERTED TEXT */
+    mix-blend-mode: normal;
+    font-family: var(--font-mono);
+    font-size: var(--text-base);
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: lowercase;
+    display: block;
+    text-decoration: none;
+}
+
+nav a::before {
+    content: none;
+}
+
+nav a:hover {
+    background-color: var(--color-bg);
+    /* INVERTED Hover */
+    color: var(--color-text);
+}
+
+#toggle-panel {
+    display: none;
+}
+
+/* --- Navigation (Desktop Overlay Revert) --- */
+@media (min-width: 768px) {
+    nav {
+        top: auto;
+        bottom: var(--spacing-md);
+        right: var(--spacing-md);
+        left: auto;
+        width: auto;
+        flex-direction: column;
+        align-items: flex-end;
+        background: transparent;
+        border-top: none;
+        border-bottom: none;
+        gap: var(--spacing-sm);
+        padding: 0;
+        color: #ffffff;
+        mix-blend-mode: difference;
+    }
+
+    nav a {
+        font-size: var(--text-lg);
+        padding: 0.5rem 0.5rem;
+        text-indent: var(--tracking-wide);
+        letter-spacing: var(--tracking-wide);
+        font-weight: 400;
+        color: #ffffff;
+    }
+
+    nav a::before {
+        content: ";";
+        margin-right: 0.5rem;
+    }
+
+    nav a:hover {
+        background-color: #ffffff;
+        color: #000000;
+        mix-blend-mode: normal;
+    }
+
+    #toggle-panel {
+        display: block;
+    }
+}
+
+/* --- Contact List --- */
+.contact-list {
+    list-style: none;
+    margin-top: 0;
+    width: 100%;
+}
+
+.contact-list li {
+    margin-bottom: 0.5rem;
+}
+
+.contact-list li::before {
+    content: "//";
+    margin-right: 1rem;
+}
+
+/* --- Bio Pills --- */
+#bio .contact-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+#bio .contact-list li {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-glass);
+    padding: 0.25rem 0.5rem;
+    margin-bottom: 0;
+    font-size: var(--text-base);
+    white-space: wrap;
+    /* Allow wrapping on mobile */
+    text-align: center;
+    line-height: 1.2;
+}
+
+#bio .contact-list li::before {
+    content: none !important;
+}
+
+@media (min-width: 768px) {
+    #bio .contact-list li {
+        white-space: nowrap;
+        padding: 0.25rem 0.75rem;
+    }
+}
+
+/* --- Terminal / Portfolio List --- */
+.terminal-list {
+    /* Mobile: Card Slider */
+    width: 100%;
+
+    font-family: var(--font-mono);
+    display: flex;
+
+    /* Mobile: Horizontal Swipe Cards */
+    flex-direction: row;
+    flex-wrap: nowrap;
+    /* Force single row */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 0;
+    /* No gap for continuous swipe */
+    padding: 0 7.5vw 1rem 7.5vw;
+    /* Center items (100-85)/2 */
+
+    margin-top: 0;
+    border: none;
+    /* Remove wrapper border on mobile */
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+/* Mobile Header (Hidden) */
+.terminal-header {
+    display: none;
+}
+
+
+/* Mobile Terminal Item (Card) */
+.terminal-item {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    text-decoration: none;
+    color: var(--color-text);
+    border: 1px solid var(--border-glass);
+    background: var(--glass-bg);
+    /* Card BG */
+    letter-spacing: var(--tracking-normal);
+    gap: 0.25rem;
+    /* Reduced gap */
+
+    min-width: 85vw;
+    /* Peek Layout */
+    width: 85vw;
+    scroll-snap-align: center;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    /* Ensure padding includes in width */
+    border-right: none;
+    /* Collapse borders */
+}
+
+.terminal-item:last-child {
+    border-bottom: 1px solid var(--border-glass);
+    border-right: 1px solid var(--border-glass);
+    /* Restore last border */
+}
+
+.term-name {
+    font-size: 1.25rem;
+    /* Larger Title */
+    font-weight: 700;
+}
+
+.term-id,
+.term-year,
+.term-stack,
+.term-type {
+    font-size: 0.9em;
+    /* Larger Meta */
+    opacity: 0.8;
+    margin-right: 0.5rem;
+}
+
+.term-type {
+    text-transform: lowercase;
+    /* Uppercase Type */
+}
+
+/* Mobile Project Image */
+.mobile-project-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    /* Square Container */
+    object-fit: contain;
+    /* Preserve Image Ratio */
+    object-position: center;
+    /* Center in Square */
+    border-bottom: 1px solid var(--border-glass);
+    background: var(--glass-bg);
+    /* Fill voids */
+    display: block;
+}
+
+/* Mobile Meta Row (Single Line) */
+.mobile-meta-row {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0;
+    /* Let ::after handle spacing */
+    width: 100%;
+    overflow: hidden;
+}
+
+.mobile-meta-row .term-type {
+    margin-right: 0;
+    /* Let gap handle spacing */
+    white-space: nowrap;
+}
+
+.mobile-meta-row .term-stack {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 0.25rem;
+    /* Gap after separator */
+}
+
+/* Hide some stats on mobile to be "Basic" */
+.term-id,
+.term-year {
+    display: none;
+}
+
+/* Allow type and stack */
+.term-type::after {
+    content: " | ";
+}
+
+@media (min-width: 768px) {
+    .terminal-list {
+        width: 70%;
+        /* Fill available space */
+        margin-left: 0;
+        /* Reset mobile negative margin */
+        flex: 1;
+        /* Fill remaining vertical space */
+        min-height: 0;
+        margin-bottom: 0;
+
+        /* Reset Mobile Card Styles */
+        flex-direction: column;
+        overflow-x: visible;
+        scroll-snap-type: none;
+        gap: 0;
+        padding: 0;
+        /* Full Reset of Mobile Padding */
+        border: 1px solid var(--border-glass);
+        background: var(--glass-bg);
+        -webkit-backdrop-filter: blur(var(--glass-blur));
+        backdrop-filter: blur(var(--glass-blur));
+    }
+
+    .terminal-header {
+        display: grid;
+        grid-template-columns: 0.2fr 1.25fr 1fr 1.25fr 0.25fr;
+        padding: 0.5rem 1rem;
+        font-size: var(--text-base);
+        text-transform: lowercase;
+        border-bottom: 1px solid var(--border-glass);
+        color: var(--color-text);
+        letter-spacing: var(--tracking-normal);
+        /* Explicit */
+    }
+
+    .terminal-header span {
+        opacity: 0.8;
+    }
+
+    .terminal-item {
+        display: grid;
+        grid-template-columns: 0.2fr 1.25fr 1fr 1.25fr 0.25fr;
+        padding: 0 1rem;
+        align-items: center;
+        gap: 0;
+        flex: 1;
+        min-height: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        letter-spacing: var(--tracking-normal);
+        /* Explicit */
+
+        /* Reset Card Styles */
+        min-width: 0;
+        width: auto;
+        /* Reset mobile 85vw width */
+        border: none;
+        border-bottom: 1px solid var(--border-glass);
+        background: transparent;
+        scroll-snap-align: none;
+    }
+
+    .terminal-item:last-child {
+        border-right: none;
+        /* Reset mobile border */
+        border-bottom: none;
+        /* Avoid double border with container */
+    }
+
+    /* Unwrap mobile meta row for Desktop Grid */
+    .mobile-meta-row {
+        display: contents;
+    }
+
+    .mobile-meta-row .term-stack {
+        margin-left: 0;
+        /* Reset mobile gap */
+    }
+
+    /* Hide Mobile Image on Desktop */
+    .mobile-project-img {
+        display: none;
+    }
+
+    /* RESET Font Size & Margins for children */
+    .term-id,
+    .term-name,
+    .term-type,
+    .term-stack,
+    .term-year {
+        font-size: var(--text-base) !important;
+        /* Force override mobile 0.8em */
+        margin-right: 0;
+        /* Reset mobile margins */
+        margin-left: 0;
+    }
+
+    .term-id,
+    .term-year {
+        display: block;
+    }
+
+    .term-type::after {
+        content: none;
+    }
+
+    .terminal-item:hover {
+        padding-left: 2rem;
+        background: var(--color-accent);
+        color: var(--color-bg);
+    }
+
+    .terminal-item:hover .term-id,
+    .terminal-item:hover .term-name,
+    .terminal-item:hover .term-type,
+    .terminal-item:hover .term-stack,
+    .terminal-item:hover .term-year {
+        color: var(--color-bg);
+        opacity: 1;
+    }
+
+    .term-type {
+        text-transform: lowercase;
+    }
+}
+
+/* --- Portfolio Preview (Desktop Only) --- */
+#project-preview {
+    display: none;
+    /* Hidden by default on mobile */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+    pointer-events: none;
+    z-index: var(--z-overlay);
+    --p-x: 20px;
+    --p-y: 20px;
+    --p-scale: 1;
+
+    transform: translate(var(--p-x), var(--p-y)) scale(var(--p-scale));
+}
+
+.preview-content {
+    height: 25rem;
+    display: flex;
+}
+
+#preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 1px solid var(--border-glass);
+    background: var(--glass-bg);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 768px) {
+    #project-preview.visible {
+        display: block;
+        opacity: 1;
+        --p-scale: 1;
+    }
+}
+
+/* ==========================================================================
+   7. UTILITIES (Custom Panel)
+   ========================================================================== */
+#pane-container {
+    position: fixed;
+    top: var(--spacing-sm);
+    right: auto;
+    left: var(--spacing-sm);
+    /* Move to left on mobile to avoid covering Nav? Or just stack? user wants optional. */
+    z-index: var(--z-controls);
+    width: 100%;
+    max-width: 25rem;
+
+    /* Hidden by default on mobile unless toggled - Logic will be in JS or here? 
+       User asked to "make it optional". 
+       Let's create a class for "panel-visible" or similar, handled by JS.
+       For now, we style it generally.
+    */
+    display: none;
+    /* Hide by default on mobile per user request */
+}
+
+@media (min-width: 768px) {
+    #pane-container {
+        display: block;
+        /* Visible by default on desktop */
+        right: var(--spacing-md);
+        left: auto;
+        top: var(--spacing-md);
+        max-width: none;
+    }
+}
+
+/* If user explicitly toggles it ON in mobile, we need a helper class */
+body.show-panel-mobile #pane-container {
+    display: block;
+}
+
+.custom-panel {
+    width: 100%;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--border-glass);
+    padding: 1rem;
+    font-family: var(--font-mono);
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+
+    text-shadow: none;
+    font-size: var(--text-sm);
+}
+
+.panel-title {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--text-sm);
+    font-weight: 700;
+
+    border-bottom: 1px solid var(--border-glass);
+    padding-bottom: 0.5rem;
+}
+
+.panel-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2rem 1fr 3rem;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.panel-label {
+    font-size: var(--text-sm);
+    width: 100%;
+    opacity: 1.0;
+    white-space: nowrap;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 700;
+}
+
+.panel-value {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    white-space: nowrap;
+    text-align: right;
+    width: 100%;
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 0.75rem;
+    width: 0.75rem;
+    background: var(--color-text);
+    cursor: pointer;
+    margin-top: -0.3125rem;
+    box-shadow: 0 0 0 1px var(--color-bg);
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 0.125rem;
+    cursor: pointer;
+    background: var(--border-glass);
+}
+
+input[type=checkbox] {
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid var(--border-glass);
+    cursor: pointer;
+    display: grid;
+    place-content: center;
+}
+
+input[type=checkbox]::before {
+    content: "";
+    width: 0.625rem;
+    height: 0.625rem;
+    background-color: var(--color-text);
+    transform: scale(0);
+    transition: 0.1s transform ease-in-out;
+}
+
+input[type=checkbox]:checked::before {
+    transform: scale(1);
+}
+
+/* ==========================================================================
+   7. PANELS (Responsive: Mini-Bar on Mobile, Full on Desktop)
+   ========================================================================== */
+#pane-container {
+    position: fixed;
+    z-index: var(--z-overlay);
+    pointer-events: none;
+    display: flex;
+}
+
+/* --- MOBILE MINI-BAR (Default) --- */
+#pane-container {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    justify-content: center;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+@media (max-width: 767px) {
+    #pane-container {
+        display: none !important;
+    }
+}
+
+.custom-panel {
+    pointer-events: auto;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    backdrop-filter: blur(var(--glass-blur));
+    border-top: 1px solid var(--border-glass);
+
+    width: 100%;
+    padding: 0.5rem 1rem;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 0.5rem;
+
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text);
+}
+
+/* Hide Elements on Mobile */
+.custom-panel .panel-title,
+.custom-panel .panel-separator,
+.custom-panel .row-cBase,
+.custom-panel .row-dBase,
+.custom-panel .row-points,
+.custom-panel .row-zoom,
+.custom-panel .row-opacity,
+.custom-panel .row-trails,
+.custom-panel .row-hideUI,
+.custom-panel .panel-value {
+    display: none !important;
+}
+
+/* Style Mobile Sliders */
+.custom-panel .panel-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    margin: 0;
+    padding: 0;
+}
+
+.custom-panel .panel-label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.2rem;
+}
+
+.custom-panel input[type=range] {
+    width: 100%;
+    height: 1rem;
+}
+
+/* Style Mobile Toggle (Dark Mode Only) */
+.custom-panel .row-toggles {
+    flex: 0 0 auto;
+    display: block !important;
+    /* Override flex */
+}
+
+.custom-panel .toggle-btn-desktop {
+    appearance: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid var(--border-glass);
+    background: transparent;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    padding: 0;
+}
+
+.custom-panel .toggle-btn-desktop::before {
+    content: "☀";
+    font-size: 1rem;
+    color: var(--color-text);
+}
+
+.custom-panel .toggle-btn-desktop:checked::before {
+    content: "☾";
+}
+
+
+/* --- DESKTOP PANEL (Restoration) --- */
+@media (min-width: 768px) {
+    #pane-container {
+        top: var(--spacing-md);
+        right: var(--spacing-md);
+        bottom: auto;
+        left: auto;
+        width: auto;
+        height: auto;
+        max-height: calc(100vh - 2 * var(--spacing-md));
+        padding: 0;
+        justify-content: flex-end;
+    }
+
+    .custom-panel {
+        width: clamp(20rem, 20vw, 36rem);
+        height: auto;
+        border: 1px solid var(--border-glass);
+        background: var(--glass-bg);
+
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 0;
+        padding: 0.75rem;
+
+        overflow-y: auto;
+        font-size: var(--text-sm);
+
+        /* Visible by default on Desktop (Toggled via Link) */
+        transform: translateX(0);
+        transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    /* Hide when Active (Toggled) */
+    body.panel-hidden .custom-panel {
+        transform: translateX(100%);
+    }
+
+    /* Restore Elements */
+    /* Restore Elements */
+    .custom-panel .panel-title,
+    .custom-panel .panel-separator,
+    .custom-panel .panel-value {
+        display: block !important;
+    }
+
+    .custom-panel .row-cBase,
+    .custom-panel .row-dBase,
+    .custom-panel .row-points,
+    .custom-panel .row-zoom,
+    .custom-panel .row-opacity,
+    .custom-panel .row-trails,
+    .custom-panel .row-hideUI {
+        display: grid !important;
+    }
+
+    .custom-panel .panel-title {
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+        display: flex !important;
+        justify-content: space-between !important;
+        width: 100%;
+    }
+
+    .custom-panel .panel-title span {
+        display: inline-block;
+        width: 1ch;
+        text-align: center;
+    }
+
+    .custom-panel .panel-separator {
+        width: 100%;
+        height: 1px;
+        background: var(--border-glass);
+        margin: 0.25rem 0;
+    }
+
+    .custom-panel .panel-row {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 4.5rem 1fr 4rem;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .custom-panel .panel-label {
+        font-size: 0.8rem;
+        margin-bottom: 0;
+        width: 100%;
+        opacity: 1.0;
+        white-space: nowrap;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: lowercase;
+    }
+
+    .custom-panel .panel-value {
+        font-weight: 700;
+        white-space: nowrap;
+        text-align: right;
+        width: 100%;
+        font-size: 0.8rem;
+    }
+
+    .custom-panel input[type=range] {
+        height: auto;
+        width: 100%;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    /* Restore Desktop Toggles */
+    .custom-panel .row-toggles {
+        display: grid !important;
+        grid-template-columns: 5fr 2fr 4fr;
+        width: 100%;
+        align-items: center;
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+    }
+
+    .custom-panel .row-toggles .panel-row {
+        /* Reset margins/widths handled by grid positioning */
+        width: auto !important;
+        margin: 0;
+        gap: 0.25rem;
+    }
+
+    .custom-panel .row-toggles .panel-row:nth-child(1) {
+        justify-self: start;
+    }
+
+    .custom-panel .row-toggles .panel-row:nth-child(2) {
+        justify-self: center;
+    }
+
+    .custom-panel .row-toggles .panel-row:nth-child(3) {
+        justify-self: end;
+    }
+
+    .custom-panel .row-toggles .panel-row {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        width: auto !important;
+        margin: 0;
+        gap: 0.25rem;
+    }
+
+    .custom-panel .row-toggles .panel-label {
+        width: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        flex: 0 1 auto !important;
+        display: inline-block !important;
+        overflow: visible !important;
+        white-space: nowrap !important;
+        opacity: 1 !important;
+    }
+
+    .custom-panel .toggle-btn-desktop {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 0.8rem;
+        height: 0.8rem;
+        border: 1px solid var(--color-text);
+        background: transparent;
+        cursor: pointer;
+        margin: 0;
+        position: relative;
+        flex-shrink: 0;
+        border-radius: 0;
+        /* Square edges */
+    }
+
+    .custom-panel .toggle-btn-desktop:checked {
+        background: var(--color-text);
+        box-shadow: 0 0 4px var(--color-text);
+    }
+
+    .custom-panel .toggle-btn-desktop:hover {
+        opacity: 0.7;
+    }
+
+    .custom-panel .toggle-btn-desktop::before,
+    .custom-panel .toggle-btn-desktop:checked::before {
+        content: none;
+    }
+}
+
+/* ==========================================================================
+   8. UTILITIES (State Classes)
+   ========================================================================== */
+body.ui-hidden nav,
+body.ui-hidden #pane-container,
+body.ui-hidden main {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+body.ui-hidden main {
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   9. ANIMATIONS
+   ========================================================================== */
+@keyframes letter-enter {
+    0% {
+        opacity: 0;
+        filter: blur(20px);
+        transform: scale(1.5);
+    }
+
+    100% {
+        opacity: 1;
+        filter: blur(0);
+        transform: scale(1);
+    }
+}
+
+#home h1 span {
+    display: inline-block;
+    opacity: 0;
+    animation: letter-enter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: calc(0.1s * var(--i));
+    will-change: opacity, filter, transform;
+}
+
+.vitae-description {
+    opacity: 0.8;
+    display: block;
+    margin-top: 0.2rem;
+}

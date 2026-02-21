@@ -1,0 +1,29 @@
+sections:
+  - title: interests
+    items:
+      - generative art
+      - ai/ml
+      - web3
+      - poetry
+      - linguistics
+      - semiotics
+      - structuralism
+      - typography
+      - hiphop
+      - table soccer
+  - title: tools
+    items:
+      - javascript
+      - python
+      - p5.js
+      - glsl
+      - touchdesigner
+      - photoshop
+      - indesign
+  - title: languages
+    items:
+      - tr
+      - en
+      - fr
+      - es
+      - it

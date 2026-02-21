@@ -1,0 +1,163 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>deuspoeticus</title>
+
+    <!-- Font Preload -->
+    <link rel="preload" href="./fonts/TrenchSlab-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="./fonts/GeistPixel-Square.woff2" as="font" type="font/woff2" crossorigin>
+    <script>
+        try {
+            const params = JSON.parse(localStorage.getItem('ordo_ab_chao_params'));
+            if (params && params.darkMode) {
+                document.documentElement.classList.add('dark-mode');
+            }
+        } catch (e) {
+            console.error("Theme load error", e);
+        }
+    </script>
+
+    <link rel="stylesheet" href="style.css?v=3">
+    <script src="script.js" defer></script>
+    <!-- <script src="portfolio.js" defer></script> -->
+</head>
+
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <div id="pane-container"></div>
+
+    <nav>
+        <a href="#home">home</a>
+        <a href="#bio">bio</a>
+        <a href="#vitae">vitae</a>
+        <a href="#portfolio">portfolio</a>
+        <a href="#connect">connect</a>
+        <a href="#" id="toggle-panel">settings</a>
+    </nav>
+
+    <main>
+        <section id="home">
+            <div class="section-header">
+                <h1 aria-label="DEVSPOETICVS">
+                    <span style="--i:0">D</span><span style="--i:1">E</span><span style="--i:2">V</span><span
+                        style="--i:3">S</span><span style="--i:4">P</span><span style="--i:5">O</span><span
+                        style="--i:6">E</span><span style="--i:7">T</span><span style="--i:8">I</span><span
+                        style="--i:9">C</span><span style="--i:10">V</span><span style="--i:11">S</span>
+                </h1>
+            </div>
+            <div class="section-content">
+                <p>i do languages</p>
+            </div>
+        </section>
+
+        <section id="bio">
+            <div class="section-header">
+                <h1>BIO</h1>
+            </div>
+            <div class="section-content">
+
+
+                {% for section in site.data.bio.sections %}
+                <h2 class="subsection-title">{{ section.title }}</h2>
+                <ul class="contact-list">
+                    {% for item in section.items %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="vitae">
+            <div class="section-header">
+                <h1>VITAE</h1>
+            </div>
+            <div class="section-content">
+                <p>complete CV available upon request</p>
+
+                {% for category in site.data.vitae %}
+                <h2 class="subsection-title">{{ category[0] }}</h2>
+                <ul class="contact-list">
+                    {% for item in category[1] %}
+                    <li>
+                        {% if category[0] == 'engagements' %}
+                        {{ item.name }}, {{ item.institution }}, {{ item.year }}
+                        {% else %}
+                        {{ item.name }} <br> {{ item.institution }} [{{ item.year }}]
+                        {% endif %}
+                        {% if item.description %}
+                        <br><small class="vitae-description">{{ item.description }}</small>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="portfolio">
+            <div class="section-header">
+                <h1>PORTFOLIO</h1>
+            </div>
+            <div class="terminal-list">
+                <div class="terminal-header">
+                    <span>ID</span>
+                    <span>PROJECT_NAME</span>
+                    <span>TYPE</span>
+                    <span>STACK</span>
+                    <span>YEAR</span>
+                </div>
+                {% for project in site.data.portfolio %}
+                <a href="{{ project.link }}" class="terminal-item" data-screenshot="{{ project.screenshot }}">
+                    <img src="{{ project.screenshot }}" alt="{{ project.projectName }} preview"
+                        class="mobile-project-img" loading="lazy">
+                    <span class="term-id">{{ project.id }}</span>
+                    <span class="term-name">{{ project.projectName }}</span>
+                    <div class="mobile-meta-row">
+                        <span class="term-type">{{ project.type }}</span>
+                        <span class="term-stack">[{% assign stack_joined = project.stack | join: ", " %}{{ stack_joined
+                            | downcase }}]</span>
+                    </div>
+                    <span class="term-year">{{ project.year }}</span>
+                </a>
+                {% endfor %}
+            </div>
+
+            <div id="project-preview">
+                <div class="preview-content">
+                    <img id="preview-image" src="" alt="Project Screenshot">
+                </div>
+            </div>
+        </section>
+
+        <section id="connect">
+            <div class="section-header">
+                <h1>CONNECT</h1>
+            </div>
+
+            <div class="section-content">
+                {% for section in site.data.connect %}
+                <h2 class="subsection-title">{{ section.title }}</h2>
+                <ul class="contact-list {% if section.title == 'credits' %}credits-list{% endif %}">
+                    {% for item in section.items %}
+                    {% if item.link %}
+                    <li><a href="{{ item.link }}">{{ item.label }}</a></li>
+                    {% else %}
+                    <li>{{ item.label }}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

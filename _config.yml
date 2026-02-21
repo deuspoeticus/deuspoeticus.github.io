@@ -1,0 +1,11 @@
+title: deuspoeticus
+description: "I am a creative technologist focused on the intersection of design and code."
+theme: jekyll-theme-minimal
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - .agent
+  - .gemini
+  - LICENSE
+  - README.md

@@ -1,0 +1,21 @@
+# Jekyll build artifacts
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/
+
+# Agent and IDE configurations
+.agent/
+.gemini/
+.vscode/
+.ruby-lsp/
+
+# Potential secrets
+.env
+*.key
+*.pem
+
+# OS-specific files
+.DS_Store
+Thumbs.db
