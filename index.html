@@ -115,7 +115,8 @@ layout: null
                     <span>YEAR</span>
                 </div>
                 {% for project in site.data.portfolio %}
-                <a href="{{ project.link }}" class="terminal-item" data-screenshot="{{ project.screenshot }}">
+                <a href="{{ project.link }}" class="terminal-item" data-screenshot="{{ project.screenshot }}"
+                    target="_blank" rel="noopener noreferrer">
                     <img src="{{ project.screenshot }}" alt="{{ project.projectName }} preview"
                         class="mobile-project-img" loading="lazy">
                     <span class="term-id">{{ project.id }}</span>
@@ -148,7 +149,7 @@ layout: null
                 <ul class="contact-list {% if section.title == 'credits' %}credits-list{% endif %}">
                     {% for item in section.items %}
                     {% if item.link %}
-                    <li><a href="{{ item.link }}">{{ item.label }}</a></li>
+                    <li><a href="{{ item.link }}" target="_blank" rel="noopener noreferrer">{{ item.label }}</a></li>
                     {% else %}
                     <li>{{ item.label }}</li>
                     {% endif %}
