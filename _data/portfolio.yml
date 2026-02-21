@@ -36,7 +36,7 @@
   stack: ["GLSL"]
   year: "2025"
   link: "https://www.shadertoy.com/view/l3cfzf"
-  screenshot: "../assets/images/05.png"
+  screenshot: "../assets/images/01.png"
 
 - id: "06"
   projectName: "aetherWorks"
@@ -44,7 +44,7 @@
   stack: ["ts", "react.js", "python", "wasm"]
   year: "2024"
   link: "https://aetherworks.xyz"
-  screenshot: "../assets/images/04.png"
+  screenshot: "../assets/images/04.jpg"
 
 - id: "07"
   projectName: "FX(VERSE)"

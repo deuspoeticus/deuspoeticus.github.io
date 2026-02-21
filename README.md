@@ -48,8 +48,7 @@ The "Ordo ab Chao" background is a custom particle system that:
 
 ## 📁 Repository Structure
 - `/mobius/`, `/wild-automaton/`: Interactive sub-experiments integrated as standalone components.
-- `assets/`: Image assets and project screenshots.
-- `fonts/`: Custom web fonts.
+- `assets/`: Image assets, project screenshots, and custom web fonts.
 - `_site/`: Generated static site (ignored by Git).
 
 ## 📄 License
