@@ -2,8 +2,8 @@
 @font-face {
   font-family: "TrenchSlab";
   src:
-    url("./assets/fonts/TrenchSlab-Bold.woff2") format("woff2"),
-    url("./assets/fonts/TrenchSlab-Bold.woff") format("woff");
+    url("../../assets/fonts/TrenchSlab-Bold.woff2") format("woff2"),
+    url("../../assets/fonts/TrenchSlab-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -11,7 +11,7 @@
 
 @font-face {
   font-family: "Geist Pixel";
-  src: url("./assets/fonts/GeistPixel-Square.woff2") format("woff2");
+  src: url("../../assets/fonts/GeistPixel-Square.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: fallback;
