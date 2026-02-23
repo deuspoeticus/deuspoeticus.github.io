@@ -1,55 +1,34 @@
-# deuspoeticus.github.io
+# DEVSPOETICVS [SYSTEM_TERMINAL]
 
-A data-driven, interactive portfolio for a creative technologist focused on the intersection of design, code, and language.
+```ini
+[MODE]    PORTFOLIO // TERMINAL
+[CORE]    JEKYLL // GITHUB PAGES
+[ENGINE]  ORDO AB CHAO
+```
 
-## 🚀 Overview
+### 0x01 _ ARCHITECTURE
 
-This project is a custom-built portfolio powered by **Jekyll** and **GitHub Pages**. It features a unique terminal-inspired UI with an interactive generative background powered by the HTML5 Canvas API.
+```ini
+[DATA]    compiled via /_data/*.yml
+[RENDER]  DOM injection via Liquid pipeline
+[STATE]   strictly decoupled (presentation != content)
+```
 
-## 🛠️ Technical Architecture
+### 0x02 _ ORDO AB CHAO (`script.js`)
 
-### Data-Driven UI
-The portfolio content is decoupled from the presentation layer using Jekyll's data system:
-- **`_data/portfolio.yml`**: Contains project identifiers, links, and metadata for the works showcase.
-- **`_data/vitae.yml`**: Manages education and professional engagements.
-- **`_data/bio.yml`**: Stores biographical sections and contact information.
+```ini
+[LOGIC]   linearly interpolated Clifford attractor
+[SYSTEM]  vanilla JS particle system connected to custom parametric panel
+[CACHE]   sub-surface UI state preserved via localStorage
+```
 
-### Generative Core (`script.js`)
-The "Ordo ab Chao" background is a custom particle system that:
-- Uses a unified buffer for pixel manipulation.
-- Implements a responsive grid that adapts to mobile and desktop viewports.
-- Features a custom UI panel (hidden by default) for real-time parameter exploration (turbulence, speed, point density).
-- Persists user preferences using `localStorage`.
+### 0x03 _ TOPOGRAPHY
 
-### Performance & Style
-- **Typography**: Uses Geist Mono and custom slab-serif fonts (`TrenchSlab`) to maintain a technical aesthetic.
-- **Responsive Design**: Leverages CSS Grid and Flexbox with relative units (`rem`, `vh`) for cross-device compatibility.
-- **Optimized Assets**: Fonts are preloaded, and images are lazy-loaded to ensure fast initial paint.
+```ini
+[TYPE]    TrenchSlab && Geist Pixel
+[GRID]    viewport-agnostic fluid geometry (rem/vh)
+[FORM]    techno-brutalist manifestation of vitae
+```
 
-## 💻 Development
-
-### Prerequisites
-- Ruby & Bundler (for Jekyll local development)
-
-### Local Setup
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/deuspoeticus/deuspoeticus.github.io.git
-   ```
-2. Install dependencies:
-   ```bash
-   bundle install
-   ```
-3. Run the development server:
-   ```bash
-   bundle exec jekyll serve
-   ```
-4. Visit `http://localhost:4000` to preview.
-
-## 📁 Repository Structure
-- `/mobius/`, `/wild-automaton/`: Interactive sub-experiments integrated as standalone components.
-- `assets/`: Image assets, project screenshots, and custom web fonts.
-- `_site/`: Generated static site (ignored by Git).
-
-## 📄 License
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+---
+*MIT Licensed.*
