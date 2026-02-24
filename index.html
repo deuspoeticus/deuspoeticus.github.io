@@ -16,11 +16,15 @@ layout: null
     <script>
         try {
             const params = JSON.parse(localStorage.getItem('ordo_ab_chao_params'));
-            if (params && params.darkMode) {
+            if (params) {
+                if (params.darkMode) document.documentElement.classList.add('dark-mode');
+            } else {
+                // Default to dark mode
                 document.documentElement.classList.add('dark-mode');
             }
         } catch (e) {
             console.error("Theme load error", e);
+            document.documentElement.classList.add('dark-mode'); // Failsafe
         }
     </script>
 

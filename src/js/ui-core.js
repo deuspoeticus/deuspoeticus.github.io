@@ -3,6 +3,26 @@ const portfolioItems = document.querySelectorAll(".terminal-item");
 const previewContainer = document.getElementById("project-preview");
 const previewImage = document.getElementById("preview-image");
 if (portfolioItems.length > 0 && previewContainer) {
+    // Preload portfolio screenshots for instant hover display on desktop
+    window.addEventListener("load", () => {
+        if (window.innerWidth >= 768) {
+            const preload = () => {
+                portfolioItems.forEach((item) => {
+                    const screenshot = item.getAttribute("data-screenshot");
+                    if (screenshot) {
+                        const img = new Image();
+                        img.src = screenshot;
+                    }
+                });
+            };
+            if ("requestIdleCallback" in window) {
+                requestIdleCallback(preload, { timeout: 2000 });
+            } else {
+                setTimeout(preload, 1000);
+            }
+        }
+    });
+
     const OFFSET_X = 20;
     const OFFSET_Y = 20;
     document.addEventListener("mousemove", (e) => {

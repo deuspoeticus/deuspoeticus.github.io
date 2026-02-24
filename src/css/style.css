@@ -93,7 +93,7 @@ body {
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  text-rendering: optimizeLegibility;
+  text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-kerning: normal;

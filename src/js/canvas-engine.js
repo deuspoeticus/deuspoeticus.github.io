@@ -28,7 +28,7 @@ window.addEventListener("load", function () {
   initBuffers();
   window.addEventListener("resize", initBuffers);
   const isMobile = window.innerWidth < 768;
-  const defaultPoints = isMobile ? 10000 : 100000;
+  const defaultPoints = isMobile ? 20000 : 100000;
   const defaultZoom = isMobile ? 2.0 : 1.0;
   const DEFAULT_PARAMS = {
     a: 3.0,
@@ -39,7 +39,7 @@ window.addEventListener("load", function () {
     points: defaultPoints,
     zoom: defaultZoom,
     opacity: 255,
-    darkMode: false,
+    darkMode: true,
     trails: false,
     hideUI: false,
   };
@@ -247,6 +247,11 @@ window.addEventListener("load", function () {
     value = Math.min(Math.max(value, inMin), inMax);
     return outMin + ((value - inMin) / (inMax - inMin)) * (outMax - outMin);
   }
-  draw();
+
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(() => requestAnimationFrame(draw), { timeout: 1000 });
+  } else {
+    setTimeout(() => requestAnimationFrame(draw), 500);
+  }
 });
 
