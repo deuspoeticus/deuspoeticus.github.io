@@ -25,7 +25,7 @@
 ### 0x03 _ TOPOGRAPHY
 
 ```ini
-[TYPE]    TrenchSlab && Geist Pixel
+[TYPE]    Trench Slab && Geist Pixel Square
 [GRID]    viewport-agnostic fluid geometry (rem/vh)
 [FORM]    techno-brutalist manifestation of vitae
 ```
