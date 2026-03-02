@@ -20,11 +20,13 @@
 :root {
   --font-heading: "TrenchSlab", "Arial Narrow", serif;
   --font-mono: "Geist Pixel", monospace;
-  --color-bg: #ffffff;
-  --color-text: #000000;
-  --color-accent: #000000;
-  --border-glass: #000000;
-  --glass-bg: rgba(0, 0, 0, 0.08);
+  --null-pointer: #08080A;
+  --clinical-white: #F2F2F7;
+  --color-bg: var(--clinical-white);
+  --color-text: var(--null-pointer);
+  --color-accent: var(--null-pointer);
+  --border-glass: var(--null-pointer);
+  --glass-bg: rgba(8, 8, 10, 0.08);
   --glass-blur: 1rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
@@ -40,16 +42,16 @@
   --z-controls: 1000;
   --z-overlay: 10000;
   --z-nav: 10001;
-  --text-shadow: 1px 1px 0 rgba(255, 255, 255, 1);
+  --text-shadow: 1px 1px 0 var(--clinical-white);
 }
 
 html.dark-mode {
-  --color-bg: #000000;
-  --color-text: #ffffff;
-  --color-accent: #ffffff;
-  --border-glass: #ffffff;
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --text-shadow: 1px 1px 0 rgba(0, 0, 0, 1);
+  --color-bg: var(--null-pointer);
+  --color-text: var(--clinical-white);
+  --color-accent: var(--clinical-white);
+  --border-glass: var(--clinical-white);
+  --glass-bg: rgba(242, 242, 247, 0.05);
+  --text-shadow: 1px 1px 0 var(--null-pointer);
 }
 
 @media (min-width: 768px) {
@@ -115,7 +117,7 @@ body {
 /* --- Typography --- */
 h1 {
   font-family: var(--font-heading);
-  color: #ffffff;
+  color: var(--clinical-white);
   mix-blend-mode: difference;
   text-shadow: none;
   -webkit-font-smoothing: antialiased;
@@ -343,7 +345,7 @@ nav a:hover {
     border-bottom: none;
     gap: var(--spacing-sm);
     padding: 0;
-    color: #ffffff;
+    color: var(--clinical-white);
     mix-blend-mode: difference;
   }
 
@@ -362,8 +364,8 @@ nav a:hover {
   }
 
   nav a:hover {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: var(--clinical-white);
+    color: var(--null-pointer);
     mix-blend-mode: normal;
   }
 
@@ -653,7 +655,7 @@ nav a:hover {
   object-fit: cover;
   border: 1px solid var(--border-glass);
   background: var(--glass-bg);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 32px rgba(8, 8, 10, 0.5);
 }
 
 @media (min-width: 768px) {

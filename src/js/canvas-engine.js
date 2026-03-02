@@ -200,10 +200,10 @@ window.addEventListener("load", function () {
   // --- Drawing Loop (Ordo Ab Chao Calculation) ---
   const TAU = Math.PI * 2;
   function draw() {
-    const basePixelColor = PARAMS.darkMode ? 0x00ffffff : 0x00000000;
+    const basePixelColor = PARAMS.darkMode ? 0x00f7f2f2 : 0x000a0808;
     if (PARAMS.trails) {
       CTX.globalCompositeOperation = "destination-out";
-      CTX.fillStyle = "rgba(0,0,0,0.05)";
+      CTX.fillStyle = "rgba(8, 8, 10, 0.05)";
       CTX.fillRect(0, 0, W, H);
       CTX.globalCompositeOperation = "source-over";
     } else {
