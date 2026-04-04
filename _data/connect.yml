@@ -18,9 +18,11 @@
 
 - title: "credits"
   items:
-    - label: "display: <a href='https://www.fontshare.com/fonts/trench-slab'>Trench Slab</a> by ITF"
+    - label: "typography: <a href='https://vercel.com/font?type=pixel'>Geist Pixel Square</a> by Vercel"
       link: null
-    - label: "body: <a href='https://vercel.com/font?type=pixel'>Geist Pixel Square</a> by Vercel"
+    - label: "framework: <a href='https://jekyllrb.com' target='_blank'>Jekyll</a> on GitHub Pages"
+      link: null
+    - label: "engine: custom vanilla js (ordo ab chao)"
       link: null
     - label: "DEVSPOETICVS; ENFANTDUSIECLE; 2026."
       link: null

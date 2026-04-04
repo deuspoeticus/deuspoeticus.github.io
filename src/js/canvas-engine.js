@@ -28,7 +28,7 @@ window.addEventListener("load", function () {
   initBuffers();
   window.addEventListener("resize", initBuffers);
   const isMobile = window.innerWidth < 768;
-  const defaultPoints = isMobile ? 20000 : 100000;
+  const defaultPoints = isMobile ? 5000 : 100000;
   const defaultZoom = isMobile ? 2.0 : 1.0;
   const DEFAULT_PARAMS = {
     a: 3.0,

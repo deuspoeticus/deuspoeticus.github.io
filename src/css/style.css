@@ -1,13 +1,4 @@
 /* --- Fonts & CSS Variables --- */
-@font-face {
-  font-family: "TrenchSlab";
-  src:
-    url("../../assets/fonts/TrenchSlab-Bold.woff2") format("woff2"),
-    url("../../assets/fonts/TrenchSlab-Bold.woff") format("woff");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
 
 @font-face {
   font-family: "Geist Pixel";
@@ -18,7 +9,7 @@
 }
 
 :root {
-  --font-heading: "TrenchSlab", "Arial Narrow", serif;
+  --font-heading: "Geist Pixel", monospace;
   --font-mono: "Geist Pixel", monospace;
   --null-pointer: #08080A;
   --clinical-white: #F2F2F7;
@@ -124,7 +115,7 @@ h1 {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   will-change: transform;
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: var(--tracking-normal);
   font-size: var(--text-hero);
@@ -135,14 +126,62 @@ h1 {
   hyphens: auto;
 }
 
+#home .section-header {
+  height: 100%;
+  margin-bottom: 0;
+}
+
+@keyframes logo-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
 #home h1 {
   font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: difference;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  animation: logo-float 12s ease-in-out infinite;
+  will-change: transform;
+}
+
+#home h1 img {
+  width: min(85vw, 60vh);
+  height: auto;
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+#home h1 img:hover {
+  transform: scale(1.01) rotate(-0.5deg);
+}
+
+.logo-dark {
+  display: block;
+}
+
+.logo-light {
+  display: none !important;
 }
 
 @media (min-width: 768px) {
   #home h1 {
-    font-size: var(--text-hero);
-    max-width: 90vw;
+    max-width: 100%;
+    justify-content: flex-start;
+  }
+
+  #home h1 img {
+    width: min(calc(100vw - clamp(20rem, 25vw, 60rem) - var(--spacing-md) * 2), calc(100vh - var(--spacing-md) * 2));
+    height: auto;
   }
 }
 
