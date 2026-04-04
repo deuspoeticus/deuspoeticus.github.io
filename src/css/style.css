@@ -197,7 +197,7 @@ h2 {
 
 h2::before {
   content: "{";
-  margin-right: 0.5rem;
+  margin-right: 0.25rem;
 }
 
 p,
@@ -229,7 +229,6 @@ section {
   flex-direction: column;
   justify-content: center;
   padding: var(--spacing-md) var(--spacing-sm);
-  padding-top: 3rem;
   padding-bottom: var(--spacing-md);
   position: relative;
   background-color: transparent;
@@ -329,7 +328,7 @@ nav {
   left: 0;
   width: 100%;
   padding: 0.5rem 1rem;
-  display: flex;
+  display: none;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -370,6 +369,7 @@ nav a:hover {
 
 @media (min-width: 768px) {
   nav {
+    display: flex;
     top: auto;
     bottom: var(--spacing-md);
     right: var(--spacing-md);
@@ -397,7 +397,7 @@ nav a:hover {
 
   nav a::before {
     content: ";";
-    margin-right: 0.5rem;
+    margin-right: 0.25rem;
   }
 
   nav a:hover {
@@ -424,7 +424,7 @@ nav a:hover {
 
 .contact-list li::before {
   content: "//";
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 }
 
 #bio .contact-list {
