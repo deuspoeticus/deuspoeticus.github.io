@@ -1,13 +1,10 @@
 education:
-  - name: M.Sc. in Cognitive Science (cog-SUP), Track of Computational Linguistics and Artificial Intelligence
-    institution: Sorbonne Université & Université Paris Cité
-    year: 2026 - 
+  - name: M.Sc. in Cognitive Science (cog-SUP), Computational Linguistics and AI
+    description: Sorbonne Université & Université Paris Cité, 2026 - 2028
   - name: M.A. in French Language and Literature
-    institution: Université Galatasaray
-    year: 2022 - 2025
+    description: Université Galatasaray, 2022 - 2025
   - name: B.A. in Comparative Linguistics and Applied Foreign Languages
-    institution: Université Galatasaray
-    year: 2016 - 2022
+    description: Université Galatasaray, 2016 - 2022
 
 engagements:
   - name: Guest Editor-in-Chief
