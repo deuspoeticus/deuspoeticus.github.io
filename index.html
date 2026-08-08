@@ -93,8 +93,12 @@ layout: null
                 <ul class="contact-list">
                     {% for item in category[1] %}
                     <li>
-                        {{ item.name }}, {{ item.year }}
-                        {% if item.description %}
+                        {% if category[0] == 'engagements' %}
+                        {{ item.name }}, {{ item.institution }}, {{ item.year }}
+                        {% else %}
+                        {{ item.name }} <br> {{ item.institution}}
+                        {% endif %}
+                        {% if item.description || item.institution %}
                         <br><small class="vitae-description">{{ item.description }}</small>
                         {% endif %}
                     </li>
