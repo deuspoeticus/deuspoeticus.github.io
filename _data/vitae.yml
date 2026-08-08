@@ -1,8 +1,13 @@
 education:
-  - name: M.A. French Language and Literature
+  - name: M.Sc. in Cognitive Science (cog-SUP), Track of Computational Linguistics and Artificial Intelligence
+    institution: Sorbonne Université & Université Paris Cité
+    year: 2026 - 
+  - name: M.A. in French Language and Literature
     institution: Université Galatasaray
-  - name: B.A. French Language and Literature
+    year: 2022 - 2025
+  - name: B.A. in Comparative Linguistics and Applied Foreign Languages
     institution: Université Galatasaray
+    year: 2016 - 2022
 
 engagements:
   - name: Guest Editor-in-Chief
@@ -14,6 +19,6 @@ engagements:
     year: 2023
     description: Represented the Turkish delegation as an emerging professional translator in Paris and Gif-sur-Yvette.
   - name: Guest Speaker
-    institution: Institut Français
+    institution: Institut français
     year: 2022
     description: Participated in a roundtable on the novel "Le Bal des folles" as its Turkish translator, alongside author Victoria Mas.
