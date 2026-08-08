@@ -57,7 +57,7 @@
 - id: "08"
   projectName: "self-aware."
   type: "Audioreactive diffusion artwork"
-  stack: ["TouchDesigner", "SD 1.5", "ElevenLabs", "Suno"]
+  stack: ["TD", "SD 1.5", "ElevenLabs", "Suno"]
   year: "2025"
   link: "https://x.com/deuspoeticus/status/1902367286104670282/video/1"
   screenshot: "./assets/images/08.jpg"
