@@ -18,7 +18,7 @@
 
 - title: "credits"
   items:
-    - label: "typography: <a href='https://vercel.com/font?type=pixel'>Geist Pixel Square</a> by Vercel"
+    - label: "typography: <a href='https://unifoundry.com/unifont/index.html'>GNU Unifont</a> by Unifoundry"
       link: null
     - label: "framework: <a href='https://jekyllrb.com' target='_blank'>Jekyll</a> on GitHub Pages"
       link: null
