@@ -8,7 +8,7 @@ layout: null
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEVSPØETICVS</title>
+    <title>DEVSP∅ETICVS</title>
 
     <!-- Font Preload -->
 
@@ -96,7 +96,7 @@ layout: null
                         {% if category[0] == 'engagements' %}
                         {{ item.name }}, {{ item.institution }}, {{ item.year }}
                         {% else %}
-                        {{ item.name }} <br> {{ item.institution }} [{{ item.year }}]
+                        {{ item.name }} <br> {{ item.institution }}
                         {% endif %}
                         {% if item.description %}
                         <br><small class="vitae-description">{{ item.description }}</small>
@@ -120,7 +120,7 @@ layout: null
                     <span>STACK</span>
                     <span>YEAR</span>
                 </div>
-                {% for project in site.data.portfolio %}
+                {% for project in site.data.portfolio reversed %}
                 <a href="{{ project.link }}" class="terminal-item" data-screenshot="{{ project.screenshot }}"
                     target="_blank" rel="noopener noreferrer">
                     <img src="{{ project.screenshot }}" alt="{{ project.projectName }} preview"
