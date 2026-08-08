@@ -25,7 +25,7 @@
 - id: "04"
   projectName: "aetherWorks"
   type: "Web3 dApp"
-  stack: ["TypeScript, "React.js", "Python", "WASM"]
+  stack: ["TypeScript", "React.js", "Python", "WASM"]
   year: "2024"
   link: "https://aetherworks.xyz"
   screenshot: "./assets/images/04.jpg"
