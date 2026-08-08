@@ -99,7 +99,7 @@ layout: null
                         {{ item.name }} <br> {{ item.institution}}
                         {% endif %}
                         {% if item.description || item.institution %}
-                        <br><small class="vitae-description">{{ item.description }}</small>
+                        <br><small class="vitae-description">{{ item.description || item.institution}}</small>
                         {% endif %}
                     </li>
                     {% endfor %}
