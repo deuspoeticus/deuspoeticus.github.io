@@ -76,7 +76,7 @@
   stack: ["GLSL"]
   year: "2026"
   link: "https://www.editart.xyz/series/KT1WxHGMkk1CWarfJJARu6rNWwpMudZAMRdy"
-  screenshot: "./assets/images/09.jpg"
+  screenshot: "./assets/images/10.jpg"
 
 - id: "11"
   projectName: "AXIOMATIQUE"
@@ -84,4 +84,4 @@
   stack: ["Three.js", "WebGL", "WebAudio", "Rust"]
   year: "2026"
   link: "https://deuspoeticus.itch.io/axiomatique"
-  screenshot: "./assets/images/10.jpg"
+  screenshot: "./assets/images/11.jpg"
