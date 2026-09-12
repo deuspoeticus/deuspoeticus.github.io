@@ -32,7 +32,7 @@
 
 - id: "05"
   projectName: "4d temple"
-  type: "Shader"
+  type: "Shader sketch"
   stack: ["GLSL"]
   year: "2025"
   link: "https://www.shadertoy.com/view/l3cfzf"
@@ -40,15 +40,15 @@
 
 - id: "06"
   projectName: "interdimensional crossection"
-  type: "Shader"
+  type: "Shader sketch"
   stack: ["GLSL"]
   year: "2025"
   link: "https://www.shadertoy.com/view/M3yyWd"
   screenshot: "./assets/images/06.jpg"
 
 - id: "07"
-  projectName: "gradient breaker"
-  type: "Minigame"
+  projectName: "gradient breaker!"
+  type: "Game"
   stack: ["Vanilla JS"]
   year: "2025"
   link: "https://deuspoeticus.github.io/gradient-breaker/"
@@ -63,6 +63,14 @@
   screenshot: "./assets/images/08.jpg"
 
 - id: "09"
+  projectName: "wild automaton"
+  type: "Generative sketch"
+  stack: ["p5.js"]
+  year: "2026"
+  link: "https://deuspoeticus.github.io/wild-automaton/"
+  screenshot: "./assets/images/09.jpg"
+
+- id: "10"
   projectName: "aberration"
   type: "Generative NFT"
   stack: ["GLSL"]
@@ -70,7 +78,7 @@
   link: "https://www.editart.xyz/series/KT1WxHGMkk1CWarfJJARu6rNWwpMudZAMRdy"
   screenshot: "./assets/images/09.jpg"
 
-- id: "10"
+- id: "11"
   projectName: "AXIOMATIQUE"
   type: "Game"
   stack: ["Three.js", "WebGL", "WebAudio", "Rust"]
