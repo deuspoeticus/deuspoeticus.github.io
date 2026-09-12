@@ -1,6 +1,6 @@
 - id: "01"
   projectName: "Postmodern Sacrifices"
-  type: "Generative NFT"
+  type: "Long-form generative NFT"
   stack: ["p5.js"]
   year: "2022"
   link: "https://www.fxhash.xyz/project/postmodern-sacrifices"
@@ -8,7 +8,7 @@
 
 - id: "02"
   projectName: "fx(flowField)"
-  type: "Generative NFT"
+  type: "Long-form parametric NFT"
   stack: ["p5.js"]
   year: "2023"
   link: "https://www.fxhash.xyz/project/fx(flowfield)"
@@ -16,7 +16,7 @@
 
 - id: "03"
   projectName: "FX(VERSE)"
-  type: "Generative NFT"
+  type: "Long-form generative NFT"
   stack: ["Vanilla JS"]
   year: "2023"
   link: "https://www.fxhash.xyz/project/fx(verse)"
@@ -72,10 +72,10 @@
 
 - id: "10"
   projectName: "aberration"
-  type: "Generative NFT"
+  type: "Long-form generative NFT"
   stack: ["GLSL"]
   year: "2026"
-  link: "https://www.editart.xyz/series/KT1WxHGMkk1CWarfJJARu6rNWwpMudZAMRdy"
+  link: "https://objkt.com/collections/editart/projects/aberration-31561651"
   screenshot: "./assets/images/10.jpg"
 
 - id: "11"
