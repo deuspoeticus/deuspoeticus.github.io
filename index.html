@@ -120,12 +120,14 @@ layout: null
                     <span>STACK</span>
                     <span>YEAR</span>
                 </div>
+                {% assign portfolio_base = "./assets/images/" %}
                 {% for project in site.data.portfolio reversed %}
-                <a href="{{ project.link }}" class="terminal-item" data-screenshot="{{ project.screenshot }}"
+                {% assign project_screenshot = portfolio_base | append: project.screenshot %}
+                <a href="{{ project.link }}" class="terminal-item" data-screenshot="{{ project_screenshot }}"
                     target="_blank" rel="noopener noreferrer">
-                    <img src="{{ project.screenshot }}" alt="{{ project.projectName }} preview"
+                    <img src="{{ project_screenshot }}" alt="{{ project.projectName }} preview"
                         class="mobile-project-img" loading="lazy">
-                    <span class="term-id">{{ project.id }}</span>
+                    <span class="term-id">{% if forloop.rindex < 10 %}0{% endif %}{{ forloop.rindex }}</span>
                     <span class="term-name">{{ project.projectName }}</span>
                     <div class="mobile-meta-row">
                         <span class="term-type">{{ project.type }}</span>

@@ -1,87 +1,69 @@
-- id: "01"
-  projectName: "Postmodern Sacrifices"
+- projectName: "Postmodern Sacrifices"
   type: "Long-form generative NFT"
   stack: ["p5.js"]
   year: "2022"
-  link: "https://www.fxhash.xyz/project/postmodern-sacrifices"
-  screenshot: "./assets/images/01.jpg"
+  link: "https://objkt.com/collections/fxhash/projects/13880"
+  screenshot: "01-postmodern-sacrifices.jpg"
 
-- id: "02"
-  projectName: "fx(flowField)"
+- projectName: "fx(flowField)"
   type: "Long-form parametric NFT"
   stack: ["p5.js"]
   year: "2023"
-  link: "https://www.fxhash.xyz/project/fx(flowfield)"
-  screenshot: "./assets/images/02.jpg"
+  link: "https://objkt.com/collections/fxhash/projects/28919"
+  screenshot: "02-fx-flowfield.jpg"
 
-- id: "03"
-  projectName: "FX(VERSE)"
-  type: "Long-form generative NFT"
-  stack: ["Vanilla JS"]
-  year: "2023"
-  link: "https://www.fxhash.xyz/project/fx(verse)"
-  screenshot: "./assets/images/03.svg"
-
-- id: "04"
-  projectName: "aetherWorks"
+- projectName: "aetherWorks"
   type: "Web3 dApp"
   stack: ["TypeScript", "React.js", "Python", "WASM"]
   year: "2024"
   link: "https://aetherworks.xyz"
-  screenshot: "./assets/images/04.jpg"
+  screenshot: "03-aetherworks.jpg"
 
-- id: "05"
-  projectName: "4d temple"
+- projectName: "4d temple"
   type: "Shader sketch"
   stack: ["GLSL"]
   year: "2025"
   link: "https://www.shadertoy.com/view/l3cfzf"
-  screenshot: "./assets/images/05.jpg"
+  screenshot: "04-4d-temple.jpg"
 
-- id: "06"
-  projectName: "interdimensional crossection"
+- projectName: "interdimensional crossection"
   type: "Shader sketch"
   stack: ["GLSL"]
   year: "2025"
   link: "https://www.shadertoy.com/view/M3yyWd"
-  screenshot: "./assets/images/06.jpg"
+  screenshot: "05-interdimensional-crossection.jpg"
 
-- id: "07"
-  projectName: "gradient breaker!"
+- projectName: "gradient breaker!"
   type: "Game"
   stack: ["Vanilla JS"]
   year: "2025"
   link: "https://deuspoeticus.github.io/gradient-breaker/"
-  screenshot: "./assets/images/07.jpg"
+  screenshot: "06-gradient-breaker.jpg"
 
-- id: "08"
-  projectName: "self-aware."
+- projectName: "self-aware."
   type: "Audioreactive diffusion artwork"
   stack: ["TD", "SD 1.5", "ElevenLabs", "Suno"]
   year: "2025"
   link: "https://x.com/deuspoeticus/status/1902367286104670282/video/1"
-  screenshot: "./assets/images/08.jpg"
+  screenshot: "07-self-aware.jpg"
 
-- id: "09"
-  projectName: "wild automaton"
+- projectName: "wild automaton"
   type: "Generative sketch"
   stack: ["p5.js"]
   year: "2026"
   link: "https://deuspoeticus.github.io/wild-automaton/"
-  screenshot: "./assets/images/09.jpg"
+  screenshot: "08-wild-automaton.jpg"
 
-- id: "10"
-  projectName: "aberration"
+- projectName: "aberration"
   type: "Long-form generative NFT"
   stack: ["GLSL"]
   year: "2026"
   link: "https://objkt.com/collections/editart/projects/aberration-31561651"
-  screenshot: "./assets/images/10.jpg"
+  screenshot: "09-aberration.jpg"
 
-- id: "11"
-  projectName: "AXIOMATIQUE"
+- projectName: "AXIOMATIQUE"
   type: "Game"
   stack: ["Three.js", "WebGL", "WebAudio", "Rust"]
   year: "2026"
   link: "https://deuspoeticus.itch.io/axiomatique"
-  screenshot: "./assets/images/11.jpg"
+  screenshot: "10-axiomatique.jpg"
