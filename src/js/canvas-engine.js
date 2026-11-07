@@ -220,6 +220,15 @@ window.addEventListener("load", function () {
     toggleRow.appendChild(makeToggle("trails", "trails"));
     toggleRow.appendChild(makeToggle("hide_ui", "hideUI", toggleUI));
     panel.appendChild(toggleRow);
+    const actionRow = document.createElement("div");
+    actionRow.className = "panel-row row-actions";
+    const randomBtn = document.createElement("button");
+    randomBtn.type = "button";
+    randomBtn.className = "panel-btn";
+    randomBtn.textContent = "randomize";
+    randomBtn.addEventListener("click", randomizeShape);
+    actionRow.appendChild(randomBtn);
+    panel.appendChild(actionRow);
     container.appendChild(panel);
   }
   function toggleUI(hide) {
@@ -282,7 +291,8 @@ window.addEventListener("load", function () {
     saveParams();
     createCustomPanel();
   });
-  bindControl("mc-random", () => {
+  // Shared by the mobile button and the desktop panel's "randomize".
+  function randomizeShape() {
     // Ranges kept to the region of the slider space that gives full shapes.
     PARAMS.a = randomSigned(1.2, 3.4);
     PARAMS.b = randomSigned(1.2, 3.4);
@@ -291,7 +301,8 @@ window.addEventListener("load", function () {
     saveParams();
     createCustomPanel();
     requestStill();
-  });
+  }
+  bindControl("mc-random", randomizeShape);
 
   // --- Drawing Loop (Ordo Ab Chao Calculation) ---
   const TAU = Math.PI * 2;

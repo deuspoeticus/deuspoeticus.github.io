@@ -95,6 +95,8 @@ window.addEventListener(
     "wheel",
     (e) => {
         if (!DESKTOP_MQ.matches) return;
+        // Let the settings panel scroll itself on short screens.
+        if (e.target.closest && e.target.closest(".custom-panel")) return;
         const scrollContainer = document.querySelector("main");
         if (!scrollContainer) return;
         if (Math.abs(e.deltaY) < 10) return;

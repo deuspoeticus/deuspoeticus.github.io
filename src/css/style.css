@@ -774,13 +774,18 @@ nav a:hover {
   backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--border-glass);
   width: clamp(20rem, 25vw, 60rem);
-  max-height: calc((100vh - (2 * var(--spacing-md))) * 0.5);
+  /* Never taller than the space above the desktop nav (5 links, each
+     text-lg + 1rem padding, spaced by spacing-sm). Update the 5 if links
+     are added. Scrolls if the screen is too short for everything. */
+  --nav-stack: calc(5 * (var(--text-lg) + 1rem) + 4 * var(--spacing-sm));
+  max-height: min(calc((100vh - (2 * var(--spacing-md))) * 0.6),
+      calc(100vh - (2 * var(--spacing-md)) - var(--nav-stack) - var(--spacing-sm)));
   padding: clamp(0.5rem, 2vh, 2rem);
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: var(--panel-gap);
-  overflow-y: hidden;
+  overflow-y: auto;
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   letter-spacing: var(--tracking-normal);
@@ -963,6 +968,42 @@ input[type="checkbox"]:checked::before {
 }
 
 .toggle-btn-desktop:hover {
+  opacity: 0.7;
+}
+
+/* --- Action Buttons (randomize) --- */
+.row-actions {
+  display: flex;
+  align-items: center;
+}
+
+/* Same height and border as the toggle squares above (which render at
+   1rem: the input[type="checkbox"] rule wins over .toggle-btn-desktop). */
+.panel-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 1rem;
+  padding: 0 0.5em;
+  margin: 0;
+  border: 1px solid var(--color-text);
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: lowercase;
+  text-shadow: none;
+  cursor: pointer;
+}
+
+.panel-btn:hover {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.panel-btn:active {
   opacity: 0.7;
 }
 
