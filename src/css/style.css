@@ -1034,6 +1034,15 @@ body.ui-hidden main {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Pixel icons on a 9×9 grid, 2px per cell, centered by the grid above. */
+#mobile-controls svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  shape-rendering: crispEdges;
+}
+
 #mobile-controls button + button {
   border-left: 1px solid var(--border-glass);
 }
