@@ -14,9 +14,15 @@ window.addEventListener("load", function () {
   let xOld = 0;
   let yOld = 0;
   let timeInterval;
+  // Size from the canvas element itself (CSS height: 100vh), which stays put
+  // while mobile address bars slide in and out. Only rebuild the buffers when
+  // the size really changes, e.g. on rotation.
   function initBuffers() {
-    W = window.innerWidth;
-    H = window.innerHeight;
+    const newW = CANVAS.clientWidth || window.innerWidth;
+    const newH = CANVAS.clientHeight || window.innerHeight;
+    if (newW === W && newH === H) return false;
+    W = newW;
+    H = newH;
     CANVAS.width = W;
     CANVAS.height = H;
     offScreenCvs.width = W;
@@ -24,10 +30,20 @@ window.addEventListener("load", function () {
     imageData = CTX.createImageData(W, H);
     data = imageData.data;
     buffer32 = new Uint32Array(data.buffer);
+    return true;
   }
   initBuffers();
-  window.addEventListener("resize", initBuffers);
-  const isMobile = window.innerWidth < 768;
+  window.addEventListener("resize", () => {
+    if (initBuffers()) requestStill();
+  });
+  const DESKTOP_QUERY =
+    "(min-width: 768px) and (hover: hover) and (pointer: fine)";
+  const isMobile = !window.matchMedia(DESKTOP_QUERY).matches;
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  const MOBILE_FRAME_MS = 1000 / 30;
+  let lastFrame = 0;
   const defaultPoints = isMobile ? 5000 : 100000;
   const defaultZoom = isMobile ? 2.0 : 1.0;
   const DEFAULT_PARAMS = {
@@ -116,6 +132,7 @@ window.addEventListener("load", function () {
           config.step && config.step >= 1 ? 0 : 2,
         );
         saveParams();
+        requestStill();
       });
       row.appendChild(input);
       row.appendChild(valueDisplay);
@@ -138,6 +155,7 @@ window.addEventListener("load", function () {
         PARAMS[key] = e.target.checked;
         onToggle && onToggle(e.target.checked);
         saveParams();
+        requestStill();
       });
       wrap.appendChild(chk);
       wrap.insertBefore(lbl, chk);
@@ -197,9 +215,69 @@ window.addEventListener("load", function () {
   }
   createCustomPanel();
 
+  // --- Mobile Controls ---
+  const syncTheme = () => {
+    document.documentElement.classList.toggle("dark-mode", PARAMS.darkMode);
+  };
+  const randomIn = (min, max) =>
+    Math.round((min + Math.random() * (max - min)) * 10) / 10;
+  const randomSigned = (min, max) =>
+    (Math.random() < 0.5 ? -1 : 1) * randomIn(min, max);
+  const bindControl = (id, action) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      // Keep this tap from reaching the "tap anywhere to return" listener.
+      e.stopPropagation();
+      action();
+    });
+  };
+  bindControl("mc-theme", () => {
+    PARAMS.darkMode = !PARAMS.darkMode;
+    syncTheme();
+    saveParams();
+    createCustomPanel();
+    requestStill();
+  });
+  bindControl("mc-art", () => {
+    PARAMS.hideUI = true;
+    toggleUI(true);
+    saveParams();
+    createCustomPanel();
+  });
+  bindControl("mc-random", () => {
+    // Ranges kept to the region of the slider space that gives full shapes.
+    PARAMS.a = randomSigned(1.2, 3.4);
+    PARAMS.b = randomSigned(1.2, 3.4);
+    PARAMS.cBase = randomIn(0.5, 2.5);
+    PARAMS.dBase = randomIn(0.5, 2.5);
+    saveParams();
+    createCustomPanel();
+    requestStill();
+  });
+
   // --- Drawing Loop (Ordo Ab Chao Calculation) ---
   const TAU = Math.PI * 2;
-  function draw() {
+  // With reduced motion: draw one dense still frame instead of animating,
+  // and redraw it only when something changes.
+  let drawStarted = false;
+  function requestStill() {
+    if (reducedMotion && drawStarted) requestAnimationFrame(drawStill);
+  }
+  function drawStill() {
+    renderFrame(Math.max(PARAMS.points, 60000));
+  }
+  function draw(timestamp) {
+    if (isMobile && timestamp - lastFrame < MOBILE_FRAME_MS) {
+      requestAnimationFrame(draw);
+      return;
+    }
+    lastFrame = timestamp;
+    renderFrame(PARAMS.points);
+    requestAnimationFrame(draw);
+  }
+  function renderFrame(limit) {
     const basePixelColor = PARAMS.darkMode ? 0x00f7f2f2 : 0x000a0808;
     if (PARAMS.trails) {
       CTX.globalCompositeOperation = "destination-out";
@@ -218,7 +296,6 @@ window.addEventListener("load", function () {
     const scale = (Math.min(W, H) / 5.0) * PARAMS.zoom;
     const cx = W / 2;
     const cy = H / 2;
-    const limit = PARAMS.points;
     const colorWithAlpha = (PARAMS.opacity << 24) | basePixelColor;
     for (let i = 0; i < limit; i++) {
       const newX = Math.sin(PARAMS.a * yOld) + c0 * Math.cos(PARAMS.a * xOld);
@@ -238,7 +315,6 @@ window.addEventListener("load", function () {
     }
     offScreenCtx.putImageData(imageData, 0, 0);
     CTX.drawImage(offScreenCvs, 0, 0);
-    requestAnimationFrame(draw);
   }
   function lerp(min, max, alpha) {
     return min + alpha * (max - min);
@@ -248,10 +324,14 @@ window.addEventListener("load", function () {
     return outMin + ((value - inMin) / (inMax - inMin)) * (outMax - outMin);
   }
 
+  const start = () => {
+    drawStarted = true;
+    requestAnimationFrame(reducedMotion ? drawStill : draw);
+  };
   if ("requestIdleCallback" in window) {
-    requestIdleCallback(() => requestAnimationFrame(draw), { timeout: 1000 });
+    requestIdleCallback(start, { timeout: 1000 });
   } else {
-    setTimeout(() => requestAnimationFrame(draw), 500);
+    setTimeout(start, 500);
   }
 });
 

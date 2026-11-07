@@ -10,10 +10,6 @@ layout: null
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DEVSP∅ETICVS</title>
 
-    <!-- Font Preload -->
-
-    <link rel="preload" href="./assets/fonts/GeistPixel-Square.woff2" as="font" type="font/woff2" crossorigin>
-
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
     <link rel="alternate icon" href="./favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="./apple-touch-icon.png">
@@ -34,7 +30,7 @@ layout: null
         }
     </script>
 
-    <link rel="stylesheet" href="src/css/style.css?v=3">
+    <link rel="stylesheet" href="src/css/style.css?v=4">
     <script src="src/js/canvas-engine.js" defer></script>
     <script src="src/js/ui-core.js" defer></script>
 </head>
@@ -51,6 +47,12 @@ layout: null
         <a href="#connect">connect</a>
         <a href="#" id="toggle-panel">settings</a>
     </nav>
+
+    <div id="mobile-controls" role="toolbar" aria-label="Artwork controls">
+        <button type="button" id="mc-theme" aria-label="Switch light or dark theme" title="theme">&#x25D0;</button>
+        <button type="button" id="mc-art" aria-label="Show artwork only" title="art only">&#x25C8;</button>
+        <button type="button" id="mc-random" aria-label="Randomize artwork" title="randomize">&#x2684;</button>
+    </div>
 
     <main>
         <section id="home">

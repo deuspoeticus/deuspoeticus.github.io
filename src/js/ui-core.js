@@ -1,3 +1,8 @@
+// Desktop layout = wide screen with a mouse (matches the CSS breakpoint).
+const DESKTOP_MQ = window.matchMedia(
+    "(min-width: 768px) and (hover: hover) and (pointer: fine)",
+);
+
 // --- Portfolio Item Hover Preview ---
 const portfolioItems = document.querySelectorAll(".terminal-item");
 const previewContainer = document.getElementById("project-preview");
@@ -5,7 +10,7 @@ const previewImage = document.getElementById("preview-image");
 if (portfolioItems.length > 0 && previewContainer) {
     // Preload portfolio screenshots for instant hover display on desktop
     window.addEventListener("load", () => {
-        if (window.innerWidth >= 768) {
+        if (DESKTOP_MQ.matches) {
             const preload = () => {
                 portfolioItems.forEach((item) => {
                     const screenshot = item.getAttribute("data-screenshot");
@@ -89,7 +94,7 @@ let isScrolling = false;
 window.addEventListener(
     "wheel",
     (e) => {
-        if (window.innerWidth < 768) return;
+        if (!DESKTOP_MQ.matches) return;
         const scrollContainer = document.querySelector("main");
         if (!scrollContainer) return;
         if (Math.abs(e.deltaY) < 10) return;
@@ -116,7 +121,7 @@ window.addEventListener(
     { passive: false },
 );
 window.addEventListener("keydown", (e) => {
-    if (window.innerWidth < 768) return;
+    if (!DESKTOP_MQ.matches) return;
     if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
         const scrollContainer = document.querySelector("main");
         if (!scrollContainer) return;

@@ -33,6 +33,7 @@
   --z-controls: 1000;
   --z-overlay: 10000;
   --z-nav: 10001;
+  --nav-h: 2.75rem;
   --text-shadow: 1px 1px 0 var(--clinical-white);
 }
 
@@ -45,9 +46,9 @@ html.dark-mode {
   --text-shadow: 1px 1px 0 var(--null-pointer);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
   :root {
-    --: clamp(0.85rem, 0.4vw + 0.4rem, 1.5rem);
+    --text-sm: clamp(0.85rem, 0.4vw + 0.4rem, 1.5rem);
     --text-base: clamp(1rem, 0.6vw + 0.5rem, 2rem);
     --text-lg: clamp(1.75rem, 1.5vw + 0.75rem, 4rem);
     --text-hero: clamp(4rem, 6.5vw, 16rem);
@@ -96,12 +97,14 @@ body {
   scrollbar-width: none;
 }
 
+/* 100vh is the "large" viewport on mobile, so the canvas keeps its size
+   while the browser's address bar shows and hides during scrolling. */
 #bg-canvas {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   z-index: var(--z-canvas);
   pointer-events: none;
 }
@@ -188,7 +191,7 @@ h1 {
   display: none !important;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
   #home h1 {
     max-width: 100%;
     justify-content: flex-start;
@@ -228,26 +231,26 @@ main {
   z-index: var(--z-content);
   display: flex;
   flex-direction: column;
-  height: 100dvh;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
   padding-bottom: 0;
 }
 
+/* Mobile: sections flow in the normal page scroll (no inner scroll areas,
+   no forced snapping). Each fills at least one screen. */
 section {
   width: 100%;
-  height: 100dvh;
-  min-height: 100dvh;
+  min-height: 100vh;
+  min-height: 100svh;
   flex-shrink: 0;
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: var(--spacing-md) var(--spacing-sm);
-  padding-bottom: var(--spacing-md);
+  justify-content: flex-start;
+  padding: calc(var(--nav-h) + var(--spacing-sm)) var(--spacing-sm) 5rem; /* bottom clears the controls */
   position: relative;
   background-color: transparent;
-  overflow-y: auto;
+}
+
+#home {
+  justify-content: center;
 }
 
 .section-header {
@@ -271,7 +274,7 @@ section {
   margin-top: 0;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
 
   html,
   body {
@@ -332,7 +335,7 @@ section {
 
   #vitae .section-content,
   #connect .section-content {
-    width: 66%; !important
+    width: 66%;
   }
 }
 
@@ -342,11 +345,14 @@ nav {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 0.5rem 1rem;
-  display: none;
+  height: var(--nav-h);
+  padding: 0 0.5rem;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  gap: 0.25rem;
+  overflow-x: auto;
   background: var(--color-text);
   color: var(--color-bg);
   border-bottom: 1px solid var(--color-text);
@@ -354,7 +360,9 @@ nav {
 }
 
 nav a {
-  padding: 0.5rem;
+  padding: 0.5rem 0.375rem;
+  flex-shrink: 0;
+  white-space: nowrap;
   line-height: 1;
   text-align: center;
   text-indent: 0;
@@ -382,9 +390,11 @@ nav a:hover {
   display: none;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
   nav {
     display: flex;
+    height: auto;
+    overflow: visible;
     top: auto;
     bottom: var(--spacing-md);
     right: var(--spacing-md);
@@ -463,7 +473,7 @@ nav a:hover {
   content: none !important;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
   #bio .contact-list li {
     white-space: nowrap;
     padding: 0.25rem 0.75rem;
@@ -471,16 +481,14 @@ nav a:hover {
 }
 
 /* --- Portfolio Terminal List --- */
+/* Mobile: two-column grid of square thumbnails (name + type underneath). */
 .terminal-list {
   width: 100%;
   font-family: var(--font-mono);
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  gap: 0;
-  padding: 0 7.5vw 1rem 7.5vw;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding: 0;
   margin-top: 0;
   border: none;
   background: transparent;
@@ -495,24 +503,34 @@ nav a:hover {
 .terminal-item {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0 0 0.5rem;
   text-decoration: none;
   color: var(--color-text);
   border: 1px solid var(--border-glass);
   background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
   letter-spacing: var(--tracking-normal);
   gap: 0.25rem;
-  min-width: 85vw;
-  width: 85vw;
-  scroll-snap-align: center;
-  flex-shrink: 0;
+  min-width: 0;
   box-sizing: border-box;
-  border-right: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.terminal-item:last-child {
-  border-bottom: 1px solid var(--border-glass);
-  border-right: 1px solid var(--border-glass);
+.terminal-item:active {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.terminal-item .term-name,
+.terminal-item .mobile-meta-row {
+  padding: 0 0.5rem;
+}
+
+.terminal-item .term-name {
+  font-size: var(--text-sm);
+  line-height: 1.3;
+  overflow-wrap: anywhere;
 }
 
 .term-name {
@@ -524,7 +542,7 @@ nav a:hover {
 .term-year,
 .term-stack,
 .term-type {
-  font-size: var(--);
+  font-size: var(--text-sm);
   opacity: 0.8;
   margin-right: 0.5rem;
 }
@@ -536,7 +554,7 @@ nav a:hover {
 .mobile-project-img {
   width: 100%;
   aspect-ratio: 1 / 1;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   border-bottom: 1px solid var(--border-glass);
   background: var(--glass-bg);
@@ -554,14 +572,11 @@ nav a:hover {
 
 .mobile-meta-row .term-type {
   margin-right: 0;
-  white-space: nowrap;
+  line-height: 1.3;
 }
 
 .mobile-meta-row .term-stack {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-left: 0.25rem;
+  display: none;
 }
 
 .term-id,
@@ -569,17 +584,18 @@ nav a:hover {
   display: none;
 }
 
-.term-type::after {
-  content: " | ";
+.terminal-item:active .term-type {
+  opacity: 1;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
   .terminal-list {
     width: 70%;
     margin-left: 0;
     flex: 1;
     min-height: 0;
     margin-bottom: 0;
+    display: flex;
     flex-direction: column;
     overflow-x: visible;
     scroll-snap-type: none;
@@ -621,7 +637,8 @@ nav a:hover {
     border: none;
     border-bottom: 1px solid var(--border-glass);
     background: transparent;
-    scroll-snap-align: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .terminal-item:last-child {
@@ -634,7 +651,13 @@ nav a:hover {
   }
 
   .mobile-meta-row .term-stack {
+    display: block;
     margin-left: 0;
+  }
+
+  .terminal-item .term-name,
+  .terminal-item .mobile-meta-row {
+    padding: 0;
   }
 
   .mobile-project-img {
@@ -710,7 +733,7 @@ nav a:hover {
   box-shadow: 0 8px 32px rgba(8, 8, 10, 0.5);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
   #project-preview.visible {
     display: block;
     opacity: 1;
@@ -729,7 +752,7 @@ nav a:hover {
   display: none;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
   #pane-container {
     display: flex;
     top: var(--spacing-md);
@@ -759,7 +782,7 @@ nav a:hover {
   gap: var(--panel-gap);
   overflow-y: hidden;
   font-family: var(--font-mono);
-  font-size: var(--);
+  font-size: var(--text-sm);
   letter-spacing: var(--tracking-normal);
   color: var(--color-text);
   text-shadow: none;
@@ -775,7 +798,7 @@ body.panel-hidden .custom-panel {
 .panel-title {
   display: flex;
   justify-content: space-between;
-  font-size: var(--);
+  font-size: var(--text-sm);
   font-weight: 700;
   line-height: 1.4;
   padding-bottom: var(--panel-gap);
@@ -976,6 +999,100 @@ body.ui-hidden main {
   animation: letter-enter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   animation-delay: calc(0.1s * var(--i));
   will-change: opacity, filter, transform;
+}
+
+/* --- Mobile Controls (theme / art only / randomize) --- */
+#mobile-controls {
+  position: fixed;
+  right: var(--spacing-sm);
+  bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--z-nav);
+  display: flex;
+  gap: 0;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border-glass);
+}
+
+#mobile-controls button {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-content: center;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  line-height: 1;
+  text-shadow: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#mobile-controls button + button {
+  border-left: 1px solid var(--border-glass);
+}
+
+#mobile-controls button:active {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  #mobile-controls {
+    display: none;
+  }
+}
+
+body.ui-hidden #mobile-controls {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+/* Art-only mode: the whole screen is a tap target to bring the text back.
+   cursor: pointer makes iOS Safari deliver taps on the empty page. */
+body.ui-hidden {
+  cursor: pointer;
+}
+
+@media not all and (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  body.ui-hidden {
+    overflow: hidden;
+  }
+
+  body.ui-hidden::after {
+    content: "tap to return";
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom, 0px));
+    text-align: center;
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: var(--z-nav);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 .vitae-description {
