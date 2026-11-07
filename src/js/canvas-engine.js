@@ -44,8 +44,23 @@ window.addEventListener("load", function () {
   ).matches;
   const MOBILE_FRAME_MS = 1000 / 30;
   let lastFrame = 0;
-  const defaultPoints = isMobile ? 5000 : 100000;
-  const defaultZoom = isMobile ? 2.0 : 1.0;
+  // Mobile point count matches desktop density: 100k points on a 1440×900
+  // screen, scaled by screen area (≈25k on a typical phone).
+  const DESKTOP_POINTS = 100000;
+  const DESKTOP_AREA = 1440 * 900;
+  const mobilePointTarget = () =>
+    Math.min(
+      40000,
+      Math.max(
+        8000,
+        Math.round((DESKTOP_POINTS * (W * H)) / DESKTOP_AREA / 1000) * 1000,
+      ),
+    );
+  // Settings that are computed per device on mobile rather than remembered.
+  const MOBILE_COMPUTED_KEYS = ["points", "zoom"];
+  const defaultPoints = isMobile ? mobilePointTarget() : DESKTOP_POINTS;
+  // 1.0 fits the shape's widest phase across the screen's short side.
+  const defaultZoom = 1.0;
   const DEFAULT_PARAMS = {
     a: 3.0,
     b: 2.5,
@@ -59,12 +74,33 @@ window.addEventListener("load", function () {
     trails: false,
     hideUI: false,
   };
-  const storedParams = localStorage.getItem("ordo_ab_chao_params");
-  const PARAMS = storedParams
-    ? { ...DEFAULT_PARAMS, ...JSON.parse(storedParams) }
-    : DEFAULT_PARAMS;
+  const STORAGE_KEY = "ordo_ab_chao_params";
+  const readStored = () => {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch (e) {
+      return {};
+    }
+  };
+  const stored = readStored();
+  // On mobile, ignore stored points/zoom (older versions saved 5000 / 2.0).
+  if (isMobile) MOBILE_COMPUTED_KEYS.forEach((k) => delete stored[k]);
+  const PARAMS = { ...DEFAULT_PARAMS, ...stored };
   const saveParams = () => {
-    localStorage.setItem("ordo_ab_chao_params", JSON.stringify(PARAMS));
+    const toSave = { ...PARAMS };
+    if (isMobile) {
+      // Keep whatever a desktop session stored for these, don't overwrite.
+      const prev = readStored();
+      MOBILE_COMPUTED_KEYS.forEach((k) => {
+        if (k in prev) toSave[k] = prev[k];
+        else delete toSave[k];
+      });
+    }
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+    } catch (e) {
+      /* storage unavailable (private mode etc.) */
+    }
   };
 
   // --- Custom UI Panel Creation & Handling ---
@@ -202,7 +238,7 @@ window.addEventListener("load", function () {
       PARAMS.hideUI = false;
       createCustomPanel();
       toggleUI(false);
-      localStorage.setItem("ordo_ab_chao_params", JSON.stringify(PARAMS));
+      saveParams();
     }
   }
   if (PARAMS.hideUI) toggleUI(true);
@@ -274,8 +310,27 @@ window.addEventListener("load", function () {
       return;
     }
     lastFrame = timestamp;
+    const t0 = performance.now();
     renderFrame(PARAMS.points);
+    if (isMobile) adaptPoints(performance.now() - t0);
     requestAnimationFrame(draw);
+  }
+  // Adaptive quality (mobile): if drawing a frame takes too long on this
+  // phone, step the point count down. Never steps up, so it can't oscillate.
+  const FRAME_BUDGET_MS = 12;
+  const MIN_POINTS = 5000;
+  let avgCost = 0;
+  let samples = 0;
+  function adaptPoints(cost) {
+    samples++;
+    avgCost = samples === 1 ? cost : avgCost * 0.9 + cost * 0.1;
+    if (samples < 30 || avgCost <= FRAME_BUDGET_MS) return;
+    if (PARAMS.points <= MIN_POINTS) return;
+    PARAMS.points = Math.max(
+      MIN_POINTS,
+      Math.round((PARAMS.points * 0.75) / 1000) * 1000,
+    );
+    samples = 0;
   }
   function renderFrame(limit) {
     const basePixelColor = PARAMS.darkMode ? 0x00f7f2f2 : 0x000a0808;
