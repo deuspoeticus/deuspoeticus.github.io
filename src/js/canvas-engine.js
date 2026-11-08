@@ -219,16 +219,13 @@ window.addEventListener("load", function () {
     );
     toggleRow.appendChild(makeToggle("trails", "trails"));
     toggleRow.appendChild(makeToggle("hide_ui", "hideUI", toggleUI));
-    panel.appendChild(toggleRow);
-    const actionRow = document.createElement("div");
-    actionRow.className = "panel-row row-actions";
     const randomBtn = document.createElement("button");
     randomBtn.type = "button";
     randomBtn.className = "panel-btn";
     randomBtn.textContent = "randomize";
     randomBtn.addEventListener("click", randomizeShape);
-    actionRow.appendChild(randomBtn);
-    panel.appendChild(actionRow);
+    toggleRow.appendChild(randomBtn);
+    panel.appendChild(toggleRow);
     container.appendChild(panel);
   }
   function toggleUI(hide) {
